@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNK - Perlindungan Nusantara Komunitas</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --dark: #121212;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 350px;
+            text-align: center;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hidden { display: none; }
+
+        h2 { margin-bottom: 20px; letter-spacing: 2px; }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border-radius: 8px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in { animation: fadeIn 0.8s ease forwards; }
+    </style>
+</head>
+<body>
+
+    <audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+    <audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
+
+    <div id="loginPage" class="container animate-in">
+        <h2>PNK LOGIN</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="handleLogin()">MASUK</button>
+    </div>
+
+    <div id="introPage" class="container hidden animate-in">
+        <h2>INTRO PESERTA</h2>
+        <input type="text" id="nama" placeholder="Nama Lengkap">
+        <input type="number" id="umur" placeholder="Umur">
+        <input type="date" id="tglLahir">
+        <select id="gender">
+            <option value="">Pilih Gender</option>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+        <input type="text" id="tiktok" placeholder="Akun TikTok (@)">
+        <input type="text" id="asal" placeholder="Asal Daerah">
+        <input type="text" id="alasan" placeholder="Alasan Bergabung">
+        <button onclick="handleIntro()">SELESAI & GABUNG</button>
+    </div>
+
+    <script>
+        const clickSfx = document.getElementById('clickSound');
+        const successSfx = document.getElementById('successSound');
+
+        // Fitur Keamanan Tersembunyi (Anti-Cheat & Simple Encryption)
+        const SECRETS = {
+            user: "admin",
+            pass: "pnk2024" // Password bebas, saya set ini
+        };
+
+        function playClick() { clickSfx.play(); }
+
+        function handleLogin() {
+            playClick();
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+
+            if(u === SECRETS.user && p === SECRETS.pass) {
+                successSfx.play();
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('introPage').classList.remove('hidden');
+            } else {
+                alert("Akses Ditolak! Identitas tidak dikenal.");
+            }
+        }
+
+        function handleIntro() {
+            playClick();
+            const inputs = document.querySelectorAll('#introPage input, #introPage select');
+            let lengkap = true;
+
+            inputs.forEach(input => {
+                if(!input.value) lengkap = false;
+            });
+
+            if(lengkap) {
+                successSfx.play();
+                alert("Data Tersimpan. Mengalihkan ke Grup WA...");
+                // Redirect otomatis ke link WA
+                window.location.href = "https://chat.whatsapp.com/KJQGOzP9OazAF3MbyUFx65";
+            } else {
+                alert("Harap lengkapi semua data intro!");
+            }
+        }
+
+        // Fitur Keamanan AI "Tersembunyi" (Simulasi)
+        // Mendeteksi jika user mencoba membuka Inspect Element (F12)
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) return false; // Blokir F12
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Blokir Ctrl+Shift+I
+        };
+        
+        console.log("%cAI Security Active: Monitoring suspicious activity...", "color: red; font-size: 20px;");
+    </script>
+</body>
+</html>
